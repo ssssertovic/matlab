@@ -784,7 +784,423 @@ GUI ESMA - MATRICA
             else
                 app.ProizvodmatricaTextArea.Value = 'N/A';
             end
-   
+
+
+
+
+
+
+
+
+
+%Crtati semafor i izvrsiti simulaciju njgovog rada (crvena svijetli 50s, zuta 5s, zelena 50s pa tri puta trepce u trajanju od 5s zatim se ukljucuje zuto svjetlo pa crveno i proces se ponavlja) Lagoditi za pjesake rad semafora
+x1=[-1.2 1.2 1.2 -1.2];
+y1=[-6.2 -6.2 1.2 1.2];
+vsemafor=patch(x1,y1,'black')
+hold on
+
+t=(0:1/360:1)'*2*pi;
+x=sin(t)
+y=cos(t)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+axis([-2 5 -7 2])
+
+x2=[2.3 4.5 4.5 2.3];
+y2=[-6.2 -6.2 -2.5 -2.5];
+msemafor=patch(x2,y2,'black')
+hold on
+x3=0.8*cos(t);
+y3=0.8*sin(t);
+crvenom=fill(x3+3.4,y3-3.4,'black')
+hold on
+zelenom=fill(x3+3.4,y3-5.1,'black')
+hold on
+for i=1:3
+    pause(0.5)
+crveno=fill(x,y,'red')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+end
+for i=1:6
+    pause(0.5)
+    crvenom=fill(x3+3.4,y3-3.4,'black')
+    hold on
+    zelenom=fill(x3+3.4,y3-5.1,'g')
+    hold on
+end
+    
+for i=1:3
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'y')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+end
+for i=1:3
+    crvenom=fill(x3+3.4,y3-3.4,'r')
+    hold on
+    zelenom=fill(x3+3.4,y3-5.1,'black')
+    hold on
+end
+for i=1:3
+    pause(1)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'g')
+hold on
+end
+
+%titranje zelenog svjetla
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+end
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'g')
+hold on
+end
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+end
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'g')
+hold on
+end
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'black')
+hold on
+end
+for i=1:1
+    pause(0.5)
+crveno=fill(x,y,'black')
+hold on
+zuto=fill(x,y-2.5,'black')
+hold on
+zeleno=fill(x,y-5,'g')
+hold on
+end
+
+
+
+
+
+
+
+
+% Napraviti program koji vremenski sklapa slagalicu
+x1=[1 4 4 1];
+y1=[4 4 6 6];
+zid=patch(x1,y1,'y')
+
+x2=[2 3 3 2];
+y2=[2.7 2.7 3.5 3.5];
+prozor=patch(x2,y2,'b')
+
+x3=[2 3.5 3.5 2];
+y3=[1.5 1.5 2.2 2.2];
+vrata=patch(x3,y3,'g')
+
+x4=[4 5.5 5.5];
+y4=[2.5 1 4];
+krov=patch(x4,y4,'r')
+axis([0 10 0 7])
+pause(1)
+for i=1:60
+    x11=x1;
+    y11=y1;
+    x11=x11+5;
+    y11=y11-3;
+    pause((13/4)/60)
+    set(zid,'x',x11,'y',y11)
+end
+for i=1:60
+    x22=x4;
+    y22=y4;
+    x22=x22;
+    y22=y22+2;
+    pause((13/4)/60)
+    set(krov,'x',x22,'y',y22)
+end
+a=4.75;
+b=4.5;
+rotate(krov,[0 0 1],270,[a b 0])
+V=get(krov,'Vertices');
+x33=[V(1,1) V(2,1) V(3,1)];
+y33=[V(1,2) V(2,2) V(3,2)];
+for i=1:60
+    x44=x33;
+    y44=y33;
+    x44=x44+2.75;
+    y44=y44-0.75;
+    pause((13/4)/60)
+    set(krov,'x',x44,'y',y44)
+end
+
+for i=1:60
+    x55=x2;
+    y55=y2;
+    x55=x55+5.6;
+    y55=y55-0.9;
+    pause((13/4)/60)
+    set(prozor,'x',x55,'y',y55)
+end
+
+a1=2.75;
+b1=1.85;
+rotate(vrata,[0 0 1],90,[a1 b1 0])
+V=get(vrata,'Vertices');
+x66=[V(1,1) V(2,1) V(3,1) V(4,1)];
+y66=[V(1,2) V(2,2) V(3,2) V(4,2)];
+
+for i=1:60
+    x77=x66;
+    y77=y66;
+    x77=x77+4;
+    y77=y77-0.1;
+    pause((13/4)/60)
+    set(vrata,'x',x77,'y',y77)
+end
+
+
+
+
+
+
+
+
+
+% GUI HANA 2 – SPAJANJE RIJECI 
+function SpajanjerijeiButtonPushed(app, event)
+           sentence = app.EditField.Value; % Dobijemo tekst iz EditField-a
+    app.ResultTextArea.Value = sentence; % Postavimo vrijednost ResultTextArea-e na dobiveni tekst
+
+        end
+
+        % Button pushed function: SlovaisuglasniciButton
+        function SlovaisuglasniciButtonPushed(app, event)
+            sentence = app.EditField.Value;
+            vowels = 'aeiouAEIOU';
+            numVowels = sum(ismember(sentence, vowels));
+            numNonVowels = sum(~ismember(sentence, vowels) & isletter(sentence));
+            app.ResultTextArea.Value = sprintf('Broj slova: %d, Broj suglasnika: %d', numVowels + numNonVowels, numNonVowels);
+        end
+
+        % Button pushed function: ReenicabrojrijeibrojsuglasnikaButton
+        function ReenicabrojrijeibrojsuglasnikaButtonPushed(app, event)
+            sentence = app.EditField.Value;
+            words = strsplit(sentence);
+            result = '';
+            vowels = 'aeiouAEIOU';
+            
+            for i = 1:length(words)
+                word = words{i};
+                numVowels = sum(ismember(word, vowels));
+                result = [result, sprintf('Riječ: %s, Broj slova: %d, Broj samoglasnika: %d, Samoglasnici: %s\n', ...
+                    word, length(word), numVowels, word(ismember(word, vowels)))];
+            end
+            
+            app.ResultTextArea.Value = result;
+
+
+
+
+
+
+
+
+
+
+% GUI HANA 3 – PIRAMIDA 
+function DrawButtonPushed(app, event)
+             height = app.HeightEditField.Value;
+        baseLength = app.BaseLengthEditField.Value;
+
+        % Calculate the vertices of the tetrahedron
+        A = [0, 0, 0];
+        B = [baseLength, 0, 0];
+        C = [baseLength/2, baseLength*sqrt(3)/2, 0];
+        D = [baseLength/2, baseLength*sqrt(3)/6, height];
+
+        % Define the faces of the tetrahedron
+        faces = [
+            1, 2, 3;
+            1, 3, 4;
+            1, 4, 2;
+            2, 3, 4
+        ];
+
+        % Plot the tetrahedron
+        cla(app.UIAxes); % Clear previous plot
+        hold(app.UIAxes, 'on');
+        patch(app.UIAxes, 'Vertices', [A; B; C; D], 'Faces', faces, 'FaceColor', 'cyan', 'EdgeColor', 'k');
+        view(app.UIAxes, 3); % Set 3D view
+        axis(app.UIAxes, 'equal'); % Set equal axis scales
+        xlabel(app.UIAxes, 'X');
+        ylabel(app.UIAxes, 'Y');
+        zlabel(app.UIAxes, 'Z');
+        title(app.UIAxes, 'Tetrahedron');
+        hold(app.UIAxes, 'off');
+
+
+
+
+
+
+
+
+
+
+
+%izvrsiti animaciju kretanje tacke kroz putanju
+% generiranje objekta
+t = linspace(0,2*pi,100);
+x = 5*cos(t);
+y = 2*sin(t);
+z = t;
+% iscrtavanje
+figure
+clf 
+for k = 1:length(t)
+ 
+ t_k = t(k);
+ x_t = x(k);
+ y_t = y(k);
+ z_t = z(k);
+ 
+ plot3(x_t,y_t,z_t,'go','Linewidth',3,'MarkerSize',15);
+ hold on
+ plot3(x,y,z,'b-','LineWidth',2);
+ grid on
+ xlabel('x-osa');
+ ylabel('y-osa');
+ zlabel('z-osa');
+ title(['Tacka je na putanji t=', num2str(t_k),' sekundi']);
+ view([30 35]);
+ movieVector(k) = getframe; 
+ myWriter = VideoWriter('krivulja','MPEG-4');
+ myWriter.FrameRate = 20;
+ open(myWriter);
+ writeVideo(myWriter);
+end
+
+
+
+
+
+
+
+
+
+
+% DIFERENCIJALNA JEDNACINA
+syms x y(x)
+jed1 = (1 + x^2) * diff(y, x) == x * (2 * y + 1);
+jed2 = x* diff(y,x) - (y)/(x+1) == x;
+rj_jed1 = dsolve(jed1);
+uslov_2=y(0)==-1;
+rj_jed2 = dsolve(jed2);
+disp(rj_jed1)
+disp(rj_jed2)
+
+
+
+
+
+
+
+
+
+% Generisati čisti ton frekvencije 100 Hz u trajanju od 1s sa frekvencijom 
+uzrokovanja od
+% 3000 uzoraka po sekundi. Takoder, generisati šum trajanja 2s sa frekvencijom 
+uzrokovanja 
+% od 1000 Hz korištenjem naredbe rand. Nakon toga izvršiti spajanje ovih signala. 
+% Signal koji se dobije spajanjem miksati sa sinusnim signalom x-0.5 sin(2 pi t).
+% Prikazati sve zvučne signale.
+
+% Step 1: Generate a clean tone of 100 Hz for 1 second at 3000 Hz sampling rate
+fs1 = 3000; % Sampling frequency for the tone
+t1 = 0:1/fs1:1-1/fs1; % Time vector for 1 second
+tone = sin(2*pi*100*t1); % Generate the 100 Hz tone
+
+% Step 2: Generate white noise for 2 seconds at 1000 Hz sampling rate
+fs2 = 1000; % Sampling frequency for the noise
+t2 = 0:1/fs2:2-1/fs2; % Time vector for 2 seconds
+noise = randn(size(t2)); % Generate white noise
+% Step 3: Combine the clean tone and the white noise
+% Ensure both signals are of the same length by padding the shorter one with zeros
+if length(tone) < length(noise)
+ tone = [tone zeros(1, length(noise) - length(tone))];
+elseif length(noise) < length(tone)
+ noise = [noise zeros(1, length(tone) - length(noise))];
+end
+combined_signal = tone + noise;
+% Step 4: Mix the combined signal with a sinusoidal signal
+t_combined = 0:1/fs1:(length(combined_signal)-1)/fs1; % Time vector for combined 
+signal
+sinusoid = 0.5 * sin(2 * pi * t_combined); % Generate the sinusoidal signal
+mixed_signal = combined_signal + sinusoid;
+% Step 5: Display all the sound signals
+subplot(4, 1, 1);
+plot(t1, tone);
+title('100 Hz Tone');
+subplot(4, 1, 2);
+plot(t2, noise);
+title('White Noise');
+subplot(4, 1, 3);
+plot(t_combined, combined_signal);
+title('Combined Signal');
+subplot(4, 1, 4);
+plot(t_combined, mixed_signal);
+title('Mixed Signal');
+% Play the sounds
+sound(tone, fs1);
+pause(1);
+sound(noise, fs2);
+pause(2);
+sound(combined_signal, fs1);
+pause(length(combined_signal)/fs1);
+sound(mixed_signal, fs1);
+
+
 
 
 
