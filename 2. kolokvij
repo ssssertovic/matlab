@@ -1156,49 +1156,57 @@ uzrokovanja
 % Signal koji se dobije spajanjem miksati sa sinusnim signalom x-0.5 sin(2 pi t).
 % Prikazati sve zvučne signale.
 
-% Step 1: Generate a clean tone of 100 Hz for 1 second at 3000 Hz sampling rate
-fs1 = 3000; % Sampling frequency for the tone
-t1 = 0:1/fs1:1-1/fs1; % Time vector for 1 second
-tone = sin(2*pi*100*t1); % Generate the 100 Hz tone
 
-% Step 2: Generate white noise for 2 seconds at 1000 Hz sampling rate
-fs2 = 1000; % Sampling frequency for the noise
-t2 = 0:1/fs2:2-1/fs2; % Time vector for 2 seconds
-noise = randn(size(t2)); % Generate white noise
-% Step 3: Combine the clean tone and the white noise
-% Ensure both signals are of the same length by padding the shorter one with zeros
-if length(tone) < length(noise)
- tone = [tone zeros(1, length(noise) - length(tone))];
-elseif length(noise) < length(tone)
- noise = [noise zeros(1, length(tone) - length(noise))];
+% Generisanje čistog tona frekvencije 100 Hz u trajanju od 1 sekunde
+fs_tone = 3000; % Frekvencija uzorkovanja za ton
+t_tone = 0:1/fs_tone:1-1/fs_tone; % Vremenski vektor za ton
+tone = sin(2*pi*100*t_tone); % Generisanje tona od 100 Hz
+% Generisanje bijelog šuma trajanja 2 sekunde
+fs_noise = 1000; % Frekvencija uzorkovanja za šum
+t_noise = 2000; % Vremenski vektor za šum
+noise = randn(size(t_noise)); % Generisanje bijelog šuma
+
+% Provjera dimenzija vektora
+disp(['Dužina vektora t_noise: ' num2str(length(t_noise))]);
+disp(['Dužina vektora noise: ' num2str(length(noise))]);
+
+% Spajanje ton i šum
+if length(t_tone) < length(t_noise)
+    tone = [tone zeros(1, length(t_noise) - length(t_tone))];
+elseif length(t_noise) < length(t_tone)
+    noise = [noise zeros(1, length(t_tone) - length(t_noise))];
 end
 combined_signal = tone + noise;
-% Step 4: Mix the combined signal with a sinusoidal signal
-t_combined = 0:1/fs1:(length(combined_signal)-1)/fs1; % Time vector for combined 
-signal
-sinusoid = 0.5 * sin(2 * pi * t_combined); % Generate the sinusoidal signal
-mixed_signal = combined_signal + sinusoid;
-% Step 5: Display all the sound signals
+
+% Miješanje sa sinusnim signalom x - 0.5 * sin(2*pi*t)
+t_combined = 0:1/fs_tone:(length(combined_signal)-1)/fs_tone; % Vremenski vektor za kombinovani signal
+sinusoid = 0.5 * sin(2 * pi * t_combined); % Generisanje sinusnog signala
+mixed_signal = combined_signal + sinusoid; % Miješanje sa sinusnim signalom
+
+% Prikaz zvučnih signala
 subplot(4, 1, 1);
-plot(t1, tone);
-title('100 Hz Tone');
+plot(t_tone, tone);
+title('Čisti ton 100 Hz');
+xlabel('Vrijeme (s)');
+ylabel('Amplituda');
 subplot(4, 1, 2);
-plot(t2, noise);
-title('White Noise');
+plot(t_noise, noise);
+title('Bijeli šum');
+xlabel('Vrijeme (s)');
+ylabel('Amplituda');
 subplot(4, 1, 3);
 plot(t_combined, combined_signal);
-title('Combined Signal');
+title('Kombinovani signal');
+xlabel('Vrijeme (s)');
+ylabel('Amplituda');
 subplot(4, 1, 4);
 plot(t_combined, mixed_signal);
-title('Mixed Signal');
-% Play the sounds
-sound(tone, fs1);
-pause(1);
-sound(noise, fs2);
-pause(2);
-sound(combined_signal, fs1);
-pause(length(combined_signal)/fs1);
-sound(mixed_signal, fs1);
+title('Miješani signal');
+xlabel('Vrijeme (s)');
+ylabel('Amplituda');
+
+% Prikazivanje grafika
+sgtitle('Prikaz zvučnih signala');
 
 
 
