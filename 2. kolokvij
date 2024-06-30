@@ -1209,6 +1209,175 @@ sound(mixed_signal, fs1);
 
 
 
+Spojiti zvučne signale upotrebom operatora konkatanacije toms.wav i tenor-sax.wav
+i prikazati ih upotrebom naredbe plot.
+[zvuk 1,fs]=wavread( 'toms.wav' );
+[zvuk2,fs]=wavread( 'tenorsax.wav');
+spojeni = [zvuk 1; zvuk2];
+t=0:1/fs:1/fs* (length(spojeni)-1);
+plot(t,spojeni)
+xlabel('Vrijeme[s]')
+ylabel('Amplituda')
+% Izvršiti miksanje zvučnog signala toms.wav sa sinusnim signalom.x=0.5sin(2pi t).
+Prikazati ulazne i izlazni zvučni signal.
+zvuk1= 'toms.way';
+[y, FS]= wavread(zvuk1);
+t=0:1/Fs:1/Fs* (length(y)-1);
+sinusnisignal = 0.5*sin(2*pi*t)';
+novisignal = y + sinusnisignal;
+subplot(3,1,1), plot(t,y, 'linewidth',2)
+title('Ulazni signal' );
+ylabel('Amplituda' )
+subplot(3,1,2), plot(t,sinusnisignal, 'r', 'linewidth',2)
+title('Sinusni signal' );
+ylabel('Amplituda')
+subplot(3,1,3), plot(t,novisignal, 'g', 'linewidth',2)
+title('Miksani signal' );
+xlabel('Vrijeme[s]')
+ylabel('Amplituda')
+
+
+
+
+
+
+
+
+
+
+Projektovati niskopropusni filter ako su zadani ulazni parametri:
+frekvencija uzrokovanja fs-44000 Hz, granica propusnog pojasa Wp-1000 Hz,
+granica nepropusnog pojasa Ws-1300 Hz,
+valovitost u propusnom pojasu Rp=1 dB i slabljenje u nepropusnom pojasu Rs-40 dB.
+fs=44000;
+Wp=[2*1000/fs];
+Ws=[2*1300/fs];
+Rp=1;
+Rs=40;
+d=fdesign.lowpass('Fst,Fp,Ast,Ap',Ws,Wp,Rs,Rp);
+f=design(d,'cheby2');
+info(f)
+fvtool(f)
+[Y,FS]=wavread('matlab.wav');
+t=0:1/fs:1/fs*(length(Y)-1);
+plot(t,Y)
+xlabel('Vrijeme [s]')
+ylabel('Amplituda')
+hold on
+izlaz=filter(f,Y);
+plot(t,izlaz,'r-')
+legend('Ulazni signal','Filtrirani signal')
+
+
+
+
+
+
+
+
+Učitati proizvoljni zvučni signal. Izvršiti linearno pojačavanje zvučnog signala,
+zatim napraviti inverziju signala.
+[zvuk,fs] = audioread('sound.mp3');
+ramp = 0:1/(length(zvuk)-1):1;
+linearno_pojacanje = zvuk.*ramp';
+inverzija = zvuk .* (1 - ramp');
+t = 0:1/fs:1/fs*(length(zvuk)-1);
+subplot(211)
+plot(t,zvuk)
+title('Ulazni zvucni signal');
+axis([0 2 -1 1])
+subplot(212)
+plot(t,linearno_pojacanje)
+hold on
+plot(t, inverzija, 'g', 'LineWidth', 2);
+plot(t, ramp, 'r', 'LineWidth', 2);
+title('Linearno pojacanje i inverzija signala');
+xlabel('Vrijeme (s)');
+ylabel('Amplituda');
+legend('Linearno pojacanje', 'Inverzija', 'Ramp', 'Location', 'best');
+axis([0 2 -1 1]);
+
+
+
+
+
+
+
+
+
+
+%izvrsiti animaciju kretanje tacke kroz putanju
+% generiranje objekta
+t = linspace(0,2*pi,100);
+x = 5*cos(t);
+y = 2*sin(t);
+z = t;
+% iscrtavanje
+figure
+clf
+for k = 1:length(t)
+t_k = t(k);
+x_t = x(k);
+y_t = y(k);
+z_t = z(k);
+plot3(x_t,y_t,z_t,'go','Linewidth',3,'MarkerSize',15);
+hold on
+plot3(x,y,z,'b-','LineWidth',2);
+grid on
+xlabel('x-osa');
+ylabel('y-osa');
+zlabel('z-osa');
+title(['Tacka je na putanji t=', num2str(t_k),' sekundi']);
+view([30 35]);
+movieVector(k) = getframe;
+myWriter = VideoWriter('krivulja','MPEG-4');
+myWriter.FrameRate = 20;
+open(myWriter);
+writeVideo(myWriter);
+end
+
+
+
+
+
+
+
+
+Unositi riječi upotrebom tastature sve dok se ne unese riječ koja počinje sa
+slovom 'i'a završava sa slovom 'd' te u sebi ima samo samoglasnike.Tu riječ treba
+pretvoriti u velika slova. Zatim sve unelene riječi napisati kao niz na način da
+svaki samoglasni bude ispisan velikim slovom osim zadnje riječi koja je već
+ispisana velikim slovima.Prebrojati unešene riječi.
+rijeci = {};
+samoglasnici = 'aeiou';
+konacnaRijec = '';
+brojac = 0;
+while true
+rijec = input('Unesite riječ: ', 's');
+rijeci{end + 1} = rijec;
+brojac = brojac + 1;
+if startsWith(rijec, 'i') && endsWith(rijec, 'd')
+sredina = rijec(2:end-1);
+if all(ismember(sredina, samoglasnici))
+konacnaRijec = upper(rijec);
+rijeci{end} = konacnaRijec;
+break;
+end
+end
+end
+for i = 1:length(rijeci) - 1
+rijec = rijeci{i};
+for j = 1:length(rijec)
+if ismember(rijec(j), samoglasnici)
+rijec(j) = upper(rijec(j));
+end
+end
+rijeci{i} = rijec;
+end
+fprintf('Ukupan broj unesenih riječi: %d\n', brojac);
+fprintf('Sve unijete riječi sa velikim samoglasnicima osim zadnje:\n');
+disp(rijeci(1:end-1));
+fprintf('Zadnja riječ:\n%s\n', konacnaRijec);
 
 
 
